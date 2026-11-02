@@ -9,7 +9,7 @@ ai-sales-analyst/
 ├── data/
 │   └── README.md
 ├── notebooks/
-│   └── 01_exploration.ipynb
+│   └── 01_sales_eda.ipynb
 ├── src/
 │   ├── __init__.py
 │   ├── main.py
@@ -66,7 +66,7 @@ Veri yoksa program beklenen dosya yolunu gösterir ve veri üretmez. Veri varsa 
 jupyter notebook
 ```
 
-`notebooks/01_exploration.ipynb` dosyasını açın. İlk hücre CSV'yi yükler; sonraki hücreler sütunları, eksik değerleri ve kategorilere göre satışları incelemek içindir.
+`notebooks/01_sales_eda.ipynb` dosyasını açın ve hücreleri sırayla çalıştırın. Notebook; veri yükleme, veri kalitesi, kategori ve alt kategori kârlılığı, bölgesel performans, ürün bazında zararlar ve zaman bazında satış/kâr analizlerini içerir. Jupyter'ı proje kökünden veya `notebooks/` klasöründen başlatabilirsiniz. CSV yükleme hücresi dosya yolunu kontrol eder ve UTF-8, cp1252 ve Latin-1 kodlamalarını destekler.
 
 ## 5. İlk günlük teslimat
 
