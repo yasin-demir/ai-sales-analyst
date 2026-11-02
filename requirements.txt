@@ -1,0 +1,6 @@
+# Notebook ve sonraki veri analizi çalışmaları için.
+# python -m src.main ek paket gerektirmez.
+pandas>=2.2,<4
+matplotlib>=3.8,<4
+notebook>=7,<8
+python-dotenv>=1,<2
