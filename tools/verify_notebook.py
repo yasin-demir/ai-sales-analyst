@@ -69,7 +69,9 @@ def main():
     if args.write:nbformat.write(final,path)
     if args.html:
         args.html.parent.mkdir(parents=True,exist_ok=True)
-        args.html.write_text(html,encoding='utf-8')
+        # Generated fixed-width tables can contain trailing spaces; keep exports
+        # suitable for version control without changing displayed values.
+        args.html.write_text('\n'.join(line.rstrip() for line in html.splitlines())+'\n',encoding='utf-8')
     print('PASS: source/CLI totals, shared functions, nine figures, navigation, and Markdown currency formatting.')
     return 0
 

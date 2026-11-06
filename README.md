@@ -1,5 +1,7 @@
 # AI Sales Analyst
 
+Analiz sonuçları: [grafikli notebook](notebooks/01_sales_eda.ipynb) ve [indirilebilir HTML raporu](docs/reports/sales-eda.html). HTML raporu dokuz grafiği gömülü içerir; indirip tarayıcıda açabilirsiniz. [Rapor kapsamı ve yeniden üretme adımları](docs/reports/README.md).
+
 Yerel API: `python -m src.api`. Sunucunun ürettiği oturumlar, veri sahipliği, süre sonu, güvenli silme ve özel JSON rapor indirmeleri [yaşam döngüsü rehberinde](docs/OWNERSHIP_AND_LIFECYCLE.md) açıklanır. API yalnızca `127.0.0.1` üzerinde çalışır.
 
 API hazırlığının ilk paketi: çekirdek tür hataları, altı analiz için kesin Pydantic istek/yanıt modelleri ve dosya sorgusunda çift yönlü doğrulama. Kapsam, uyumluluk ve test komutları [sözleşme rehberinde](docs/API_CONTRACT_V1.md) yer alır.
