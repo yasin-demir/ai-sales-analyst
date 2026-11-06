@@ -13,7 +13,7 @@
 3. Turkish and English report/UI language options, accessible colors/text, keyboard navigation, small-screen layout, and actionable error wording need user acceptance checks. Human use is broader than a programmatic smoke test.
 4. A signed or otherwise verified Windows executable/installer would remove the Python setup barrier. It requires separate packaging, update, integrity, and antivirus checks; the current wheel is an installable Python package, not a standalone executable.
 5. Documentation should include a 2-minute demonstration, three distinct synthetic source schemas, sample report screenshots, support/issue templates, and a compatibility/known-limits matrix.
-6. Versioned releases and the configured hosted test workflow should run after an authorized publish/push. No hosted deployment or public upload occurred in this revision.
+6. Versioned releases remain a separate step. The configured hosted test workflow runs on push/pull requests; its results are reported separately from local checks. No hosted application deployment or dataset redistribution is included.
 
 ## Product positioning
 

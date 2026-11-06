@@ -1,0 +1,20 @@
+{
+  "upload_bytes": 20971520,
+  "data_rows": 100000,
+  "data_columns": 100,
+  "result_rows": 1000,
+  "response_bytes": 2097152,
+  "xlsx_expanded_bytes": 104857600,
+  "xlsx_entries": 2048,
+  "session_storage_bytes": 104857600,
+  "total_storage_bytes": 524288000,
+  "session_memory_bytes": 536870912,
+  "total_memory_bytes": 1073741824,
+  "waiting_jobs": 4,
+  "prepare_seconds": 60.0,
+  "query_seconds": 15.0,
+  "render_seconds": 30.0,
+  "render_figures": 8,
+  "queue_seconds": 60.0,
+  "dataset_ttl": 3600
+}
