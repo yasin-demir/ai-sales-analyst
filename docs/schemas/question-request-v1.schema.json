@@ -1,0 +1,383 @@
+{
+  "$defs": {
+    "ComparisonRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "filters": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FilterSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "analysis": {
+          "const": "period_comparison",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "comparison": {
+          "$ref": "#/$defs/ComparisonWindows"
+        }
+      },
+      "required": [
+        "analysis",
+        "comparison"
+      ],
+      "title": "ComparisonRequest",
+      "type": "object"
+    },
+    "ComparisonWindows": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_start": {
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "title": "Baseline Start",
+          "type": "string"
+        },
+        "baseline_end": {
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "title": "Baseline End",
+          "type": "string"
+        },
+        "current_start": {
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "title": "Current Start",
+          "type": "string"
+        },
+        "current_end": {
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "title": "Current End",
+          "type": "string"
+        }
+      },
+      "required": [
+        "baseline_start",
+        "baseline_end",
+        "current_start",
+        "current_end"
+      ],
+      "title": "ComparisonWindows",
+      "type": "object"
+    },
+    "DiscountRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "filters": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FilterSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "analysis": {
+          "const": "discount_comparison",
+          "title": "Analysis",
+          "type": "string"
+        }
+      },
+      "required": [
+        "analysis"
+      ],
+      "title": "DiscountRequest",
+      "type": "object"
+    },
+    "FilterSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "anyOf": [
+            {
+              "format": "date",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "format": "date",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        },
+        "segments": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "minLength": 1,
+                "pattern": "\\S",
+                "type": "string"
+              },
+              {
+                "items": {
+                  "minLength": 1,
+                  "pattern": "\\S",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array"
+              }
+            ]
+          },
+          "propertyNames": {
+            "enum": [
+              "category",
+              "region",
+              "product_id",
+              "product",
+              "order_id",
+              "currency"
+            ]
+          },
+          "title": "Segments",
+          "type": "object"
+        }
+      },
+      "title": "FilterSpec",
+      "type": "object"
+    },
+    "LossRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "filters": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FilterSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "analysis": {
+          "const": "loss_concentration",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "limit": {
+          "default": 10,
+          "exclusiveMinimum": 0,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "analysis"
+      ],
+      "title": "LossRequest",
+      "type": "object"
+    },
+    "MonthlyRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "filters": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FilterSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "analysis": {
+          "const": "monthly_trend",
+          "title": "Analysis",
+          "type": "string"
+        }
+      },
+      "required": [
+        "analysis"
+      ],
+      "title": "MonthlyRequest",
+      "type": "object"
+    },
+    "SegmentRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "filters": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FilterSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "analysis": {
+          "const": "segment_performance",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "by": {
+          "anyOf": [
+            {
+              "enum": [
+                "category",
+                "region",
+                "product_id",
+                "product",
+                "order_id"
+              ],
+              "type": "string"
+            },
+            {
+              "items": {
+                "enum": [
+                  "category",
+                  "region",
+                  "product_id",
+                  "product",
+                  "order_id"
+                ],
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            }
+          ],
+          "title": "By"
+        },
+        "sort_by": {
+          "anyOf": [
+            {
+              "enum": [
+                "sales",
+                "records",
+                "sales_share_percent",
+                "profit",
+                "gross_loss",
+                "positive_profit",
+                "loss_records",
+                "margin_percent",
+                "loss_record_rate_percent",
+                "gross_loss_share_percent"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sort By"
+        },
+        "ascending": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ascending"
+        },
+        "limit": {
+          "default": 10,
+          "exclusiveMinimum": 0,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "min_records": {
+          "default": 1,
+          "exclusiveMinimum": 0,
+          "title": "Min Records",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "analysis",
+        "by"
+      ],
+      "title": "SegmentRequest",
+      "type": "object"
+    },
+    "SummaryRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "filters": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FilterSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "analysis": {
+          "const": "summary",
+          "title": "Analysis",
+          "type": "string"
+        }
+      },
+      "required": [
+        "analysis"
+      ],
+      "title": "SummaryRequest",
+      "type": "object"
+    }
+  },
+  "discriminator": {
+    "mapping": {
+      "discount_comparison": "#/$defs/DiscountRequest",
+      "loss_concentration": "#/$defs/LossRequest",
+      "monthly_trend": "#/$defs/MonthlyRequest",
+      "period_comparison": "#/$defs/ComparisonRequest",
+      "segment_performance": "#/$defs/SegmentRequest",
+      "summary": "#/$defs/SummaryRequest"
+    },
+    "propertyName": "analysis"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/SummaryRequest"
+    },
+    {
+      "$ref": "#/$defs/SegmentRequest"
+    },
+    {
+      "$ref": "#/$defs/ComparisonRequest"
+    },
+    {
+      "$ref": "#/$defs/MonthlyRequest"
+    },
+    {
+      "$ref": "#/$defs/LossRequest"
+    },
+    {
+      "$ref": "#/$defs/DiscountRequest"
+    }
+  ]
+}

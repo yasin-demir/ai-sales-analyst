@@ -1,0 +1,20 @@
+{
+  "mapping": {
+    "sales": "Satış Tutarı",
+    "profit": "Kâr",
+    "date": "Tarih",
+    "product_id": "Ürün Kodu",
+    "product": "Ürün",
+    "category": "Kategori",
+    "region": "Bölge",
+    "discount": "İndirim",
+    "currency": "Para Birimi"
+  },
+  "mapping_reviewed": true,
+  "delimiter": ";",
+  "decimal": ",",
+  "thousands": ".",
+  "date_format": "%Y-%m-%d",
+  "discount_unit": "percent",
+  "encoding": "utf-8-sig"
+}

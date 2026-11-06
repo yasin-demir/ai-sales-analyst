@@ -1,0 +1,9 @@
+{
+  "mapping": {
+    "date": "Date",
+    "product": "Product",
+    "sales": "Revenue"
+  },
+  "mapping_reviewed": true,
+  "currency": "USD"
+}

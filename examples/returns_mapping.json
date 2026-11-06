@@ -1,0 +1,11 @@
+{
+  "mapping": {
+    "date": "When",
+    "product": "Item",
+    "sales": "Net Revenue",
+    "profit": "Net Profit",
+    "currency": "Unit"
+  },
+  "mapping_reviewed": true,
+  "allow_returns": true
+}

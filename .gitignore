@@ -11,3 +11,12 @@ data/*
 !data/README.md
 .DS_Store
 Thumbs.db
+
+!data/source_manifest.json
+work/
+
+build/
+
+dist/
+
+*.egg-info/

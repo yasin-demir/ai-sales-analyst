@@ -1,0 +1,6 @@
+﻿Tarih;Ürün Kodu;Ürün;Satış Tutarı;Kâr;Kategori;Bölge;İndirim;Para Birimi
+2026-01-10;001;Masa;1.200,00;120,00;Mobilya;Merkez;%10;TRY
+2026-01-11;002;Sandalye;800,00;-80,00;Mobilya;Batı;%30;TRY
+2026-02-10;001;Masa;1.500,00;150,00;Mobilya;Merkez;%10;TRY
+2026-03-02;003;Lamba;400,00;80,00;Aksesuar;Batı;%0;TRY
+2026-03-15;002;Sandalye;700,00;-70,00;Mobilya;Merkez;%30;TRY
