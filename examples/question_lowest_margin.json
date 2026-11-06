@@ -1,0 +1,12 @@
+{
+  "analysis": "segment_performance",
+  "by": "region",
+  "sort_by": "margin_percent",
+  "ascending": true,
+  "limit": 10,
+  "min_records": 2,
+  "filters": {
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  }
+}

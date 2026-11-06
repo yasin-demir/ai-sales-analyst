@@ -1,0 +1,2053 @@
+{
+  "$defs": {
+    "ComparisonMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline": {
+          "$ref": "#/$defs/SummaryMetrics"
+        },
+        "current": {
+          "$ref": "#/$defs/SummaryMetrics"
+        }
+      },
+      "required": [
+        "baseline",
+        "current"
+      ],
+      "title": "ComparisonMetrics",
+      "type": "object"
+    },
+    "ComparisonRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "metric": {
+          "enum": [
+            "sales",
+            "profit",
+            "gross_loss",
+            "records",
+            "unique_order_ids",
+            "average_order_value",
+            "margin_percent"
+          ],
+          "title": "Metric",
+          "type": "string"
+        },
+        "baseline": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Baseline"
+        },
+        "current": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Current"
+        },
+        "absolute_change": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Absolute Change"
+        },
+        "relative_change_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Relative Change Percent"
+        },
+        "margin_change_pp": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Margin Change Pp"
+        },
+        "relative_change_note": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Relative Change Note"
+        }
+      },
+      "required": [
+        "metric",
+        "baseline",
+        "current",
+        "absolute_change",
+        "relative_change_percent",
+        "margin_change_pp",
+        "relative_change_note"
+      ],
+      "title": "ComparisonRecord",
+      "type": "object"
+    },
+    "ComparisonResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "question": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Question",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "partial",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "analysis": {
+          "const": "period_comparison",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/ComparisonResult"
+          },
+          "minItems": 1,
+          "title": "Results",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "question",
+        "status",
+        "analysis",
+        "results"
+      ],
+      "title": "ComparisonResponse",
+      "type": "object"
+    },
+    "ComparisonResult": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "filters": {
+          "$ref": "#/$defs/ResolvedFilters"
+        },
+        "units": {
+          "$ref": "#/$defs/Units"
+        },
+        "warnings": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "definitions": {
+          "$ref": "#/$defs/Definitions"
+        },
+        "analysis": {
+          "const": "period_comparison",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComparisonMetrics"
+            },
+            {
+              "$ref": "#/$defs/EmptyMetrics"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/ComparisonRecord"
+          },
+          "title": "Records",
+          "type": "array"
+        },
+        "periods": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Periods"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "schema_version",
+        "status",
+        "scope",
+        "filters",
+        "units",
+        "warnings",
+        "definitions",
+        "analysis",
+        "metrics",
+        "records"
+      ],
+      "title": "ComparisonResult",
+      "type": "object"
+    },
+    "Definitions": {
+      "additionalProperties": false,
+      "properties": {
+        "margin_percent": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Margin Percent",
+          "type": "string"
+        },
+        "gross_loss": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Gross Loss",
+          "type": "string"
+        },
+        "share_denominator": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Share Denominator",
+          "type": "string"
+        }
+      },
+      "required": [
+        "margin_percent",
+        "gross_loss",
+        "share_denominator"
+      ],
+      "title": "Definitions",
+      "type": "object"
+    },
+    "DiscountRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "profit_status": {
+          "enum": [
+            "Loss",
+            "Positive profit",
+            "Break-even"
+          ],
+          "title": "Profit Status",
+          "type": "string"
+        },
+        "records": {
+          "minimum": 0,
+          "title": "Records",
+          "type": "integer"
+        },
+        "mean_discount_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Mean Discount Percent"
+        },
+        "median_discount_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Median Discount Percent"
+        },
+        "q1_discount_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Q1 Discount Percent"
+        },
+        "q3_discount_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Q3 Discount Percent"
+        }
+      },
+      "required": [
+        "profit_status",
+        "records",
+        "mean_discount_percent",
+        "median_discount_percent",
+        "q1_discount_percent",
+        "q3_discount_percent"
+      ],
+      "title": "DiscountRecord",
+      "type": "object"
+    },
+    "DiscountResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "question": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Question",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "partial",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "analysis": {
+          "const": "discount_comparison",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/DiscountResult"
+          },
+          "minItems": 1,
+          "title": "Results",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "question",
+        "status",
+        "analysis",
+        "results"
+      ],
+      "title": "DiscountResponse",
+      "type": "object"
+    },
+    "DiscountResult": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "filters": {
+          "$ref": "#/$defs/ResolvedFilters"
+        },
+        "units": {
+          "$ref": "#/$defs/Units"
+        },
+        "warnings": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "definitions": {
+          "$ref": "#/$defs/Definitions"
+        },
+        "analysis": {
+          "const": "discount_comparison",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "metrics": {
+          "$ref": "#/$defs/EmptyMetrics"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/DiscountRecord"
+          },
+          "title": "Records",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "status",
+        "scope",
+        "filters",
+        "units",
+        "warnings",
+        "definitions",
+        "analysis",
+        "metrics",
+        "records"
+      ],
+      "title": "DiscountResult",
+      "type": "object"
+    },
+    "EmptyMetrics": {
+      "additionalProperties": false,
+      "properties": {},
+      "title": "EmptyMetrics",
+      "type": "object"
+    },
+    "LossMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "total_gross_loss": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Total Gross Loss"
+        },
+        "selected_product_groups": {
+          "minimum": 0,
+          "title": "Selected Product Groups",
+          "type": "integer"
+        },
+        "top_groups_returned": {
+          "minimum": 0,
+          "title": "Top Groups Returned",
+          "type": "integer"
+        },
+        "top_gross_loss": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Top Gross Loss"
+        },
+        "top_share_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Top Share Percent"
+        },
+        "outside_top_gross_loss": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Outside Top Gross Loss"
+        }
+      },
+      "required": [
+        "total_gross_loss",
+        "selected_product_groups",
+        "top_groups_returned",
+        "top_gross_loss",
+        "top_share_percent",
+        "outside_top_gross_loss"
+      ],
+      "title": "LossMetrics",
+      "type": "object"
+    },
+    "LossRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "product_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Product Id"
+        },
+        "product": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Product"
+        },
+        "gross_loss": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Gross Loss"
+        },
+        "share_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Share Percent"
+        },
+        "cumulative_share_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Cumulative Share Percent"
+        }
+      },
+      "required": [
+        "gross_loss",
+        "share_percent",
+        "cumulative_share_percent"
+      ],
+      "title": "LossRecord",
+      "type": "object"
+    },
+    "LossResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "question": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Question",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "partial",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "analysis": {
+          "const": "loss_concentration",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/LossResult"
+          },
+          "minItems": 1,
+          "title": "Results",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "question",
+        "status",
+        "analysis",
+        "results"
+      ],
+      "title": "LossResponse",
+      "type": "object"
+    },
+    "LossResult": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "filters": {
+          "$ref": "#/$defs/ResolvedFilters"
+        },
+        "units": {
+          "$ref": "#/$defs/Units"
+        },
+        "warnings": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "definitions": {
+          "$ref": "#/$defs/Definitions"
+        },
+        "analysis": {
+          "const": "loss_concentration",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LossMetrics"
+            },
+            {
+              "$ref": "#/$defs/EmptyMetrics"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/LossRecord"
+          },
+          "title": "Records",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "status",
+        "scope",
+        "filters",
+        "units",
+        "warnings",
+        "definitions",
+        "analysis",
+        "metrics",
+        "records"
+      ],
+      "title": "LossResult",
+      "type": "object"
+    },
+    "MonthlyRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "records": {
+          "minimum": 0,
+          "title": "Records",
+          "type": "integer"
+        },
+        "sales": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sales"
+        },
+        "profit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Profit"
+        },
+        "gross_loss": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gross Loss"
+        },
+        "positive_profit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Positive Profit"
+        },
+        "loss_records": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Loss Records"
+        },
+        "loss_record_rate_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Loss Record Rate Percent"
+        },
+        "margin_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Margin Percent"
+        },
+        "unique_order_ids": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unique Order Ids"
+        },
+        "average_order_value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Average Order Value"
+        },
+        "month": {
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+          "title": "Month",
+          "type": "string"
+        }
+      },
+      "required": [
+        "records",
+        "sales",
+        "month"
+      ],
+      "title": "MonthlyRecord",
+      "type": "object"
+    },
+    "MonthlyResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "question": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Question",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "partial",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "analysis": {
+          "const": "monthly_trend",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/MonthlyResult"
+          },
+          "minItems": 1,
+          "title": "Results",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "question",
+        "status",
+        "analysis",
+        "results"
+      ],
+      "title": "MonthlyResponse",
+      "type": "object"
+    },
+    "MonthlyResult": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "filters": {
+          "$ref": "#/$defs/ResolvedFilters"
+        },
+        "units": {
+          "$ref": "#/$defs/Units"
+        },
+        "warnings": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "definitions": {
+          "$ref": "#/$defs/Definitions"
+        },
+        "analysis": {
+          "const": "monthly_trend",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SummaryMetrics"
+            },
+            {
+              "$ref": "#/$defs/EmptyMetrics"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/MonthlyRecord"
+          },
+          "title": "Records",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "status",
+        "scope",
+        "filters",
+        "units",
+        "warnings",
+        "definitions",
+        "analysis",
+        "metrics",
+        "records"
+      ],
+      "title": "MonthlyResult",
+      "type": "object"
+    },
+    "PeriodInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "title": "Start",
+          "type": "string"
+        },
+        "end": {
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "title": "End",
+          "type": "string"
+        },
+        "calendar_days": {
+          "exclusiveMinimum": 0,
+          "title": "Calendar Days",
+          "type": "integer"
+        },
+        "records": {
+          "minimum": 0,
+          "title": "Records",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "calendar_days",
+        "records"
+      ],
+      "title": "PeriodInfo",
+      "type": "object"
+    },
+    "Periods": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline": {
+          "$ref": "#/$defs/PeriodInfo"
+        },
+        "current": {
+          "$ref": "#/$defs/PeriodInfo"
+        }
+      },
+      "required": [
+        "baseline",
+        "current"
+      ],
+      "title": "Periods",
+      "type": "object"
+    },
+    "Ranking": {
+      "additionalProperties": false,
+      "properties": {
+        "by": {
+          "items": {
+            "enum": [
+              "category",
+              "region",
+              "product_id",
+              "product",
+              "order_id"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "By",
+          "type": "array"
+        },
+        "sort_by": {
+          "enum": [
+            "sales",
+            "records",
+            "sales_share_percent",
+            "profit",
+            "gross_loss",
+            "positive_profit",
+            "loss_records",
+            "margin_percent",
+            "loss_record_rate_percent",
+            "gross_loss_share_percent"
+          ],
+          "title": "Sort By",
+          "type": "string"
+        },
+        "ascending": {
+          "title": "Ascending",
+          "type": "boolean"
+        },
+        "limit": {
+          "exclusiveMinimum": 0,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "min_records": {
+          "exclusiveMinimum": 0,
+          "title": "Min Records",
+          "type": "integer"
+        },
+        "total_groups": {
+          "minimum": 0,
+          "title": "Total Groups",
+          "type": "integer"
+        },
+        "eligible_groups": {
+          "minimum": 0,
+          "title": "Eligible Groups",
+          "type": "integer"
+        },
+        "returned_groups": {
+          "minimum": 0,
+          "title": "Returned Groups",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "by",
+        "sort_by",
+        "ascending",
+        "limit",
+        "min_records",
+        "total_groups",
+        "eligible_groups",
+        "returned_groups"
+      ],
+      "title": "Ranking",
+      "type": "object"
+    },
+    "ResolvedFilters": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "anyOf": [
+            {
+              "format": "date",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Start"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "format": "date",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End"
+        },
+        "segments": {
+          "additionalProperties": {
+            "items": {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "propertyNames": {
+            "enum": [
+              "category",
+              "region",
+              "product_id",
+              "product",
+              "order_id",
+              "currency"
+            ]
+          },
+          "title": "Segments",
+          "type": "object"
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "segments"
+      ],
+      "title": "ResolvedFilters",
+      "type": "object"
+    },
+    "ResponseDates": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "anyOf": [
+            {
+              "format": "date",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Start"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "format": "date",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "ResponseDates",
+      "type": "object"
+    },
+    "Scope": {
+      "additionalProperties": false,
+      "properties": {
+        "input_records": {
+          "minimum": 0,
+          "title": "Input Records",
+          "type": "integer"
+        },
+        "selected_records": {
+          "minimum": 0,
+          "title": "Selected Records",
+          "type": "integer"
+        },
+        "input_observed_dates": {
+          "$ref": "#/$defs/ResponseDates"
+        },
+        "selected_observed_dates": {
+          "$ref": "#/$defs/ResponseDates"
+        },
+        "requested_dates": {
+          "$ref": "#/$defs/ResponseDates"
+        },
+        "comparison_window_records": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comparison Window Records"
+        },
+        "raw_input_records": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Input Records"
+        },
+        "explicitly_excluded_records": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Explicitly Excluded Records"
+        }
+      },
+      "required": [
+        "input_records",
+        "selected_records",
+        "input_observed_dates",
+        "selected_observed_dates",
+        "requested_dates"
+      ],
+      "title": "Scope",
+      "type": "object"
+    },
+    "SegmentRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Category"
+        },
+        "region": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Region"
+        },
+        "product_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Product Id"
+        },
+        "product": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Product"
+        },
+        "order_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Order Id"
+        },
+        "sales": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sales"
+        },
+        "records": {
+          "minimum": 0,
+          "title": "Records",
+          "type": "integer"
+        },
+        "sales_share_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sales Share Percent"
+        },
+        "profit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Profit"
+        },
+        "gross_loss": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gross Loss"
+        },
+        "positive_profit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Positive Profit"
+        },
+        "loss_records": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Loss Records"
+        },
+        "margin_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Margin Percent"
+        },
+        "loss_record_rate_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Loss Record Rate Percent"
+        },
+        "gross_loss_share_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gross Loss Share Percent"
+        }
+      },
+      "required": [
+        "sales",
+        "records",
+        "sales_share_percent"
+      ],
+      "title": "SegmentRecord",
+      "type": "object"
+    },
+    "SegmentResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "question": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Question",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "partial",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "analysis": {
+          "const": "segment_performance",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/SegmentResult"
+          },
+          "minItems": 1,
+          "title": "Results",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "question",
+        "status",
+        "analysis",
+        "results"
+      ],
+      "title": "SegmentResponse",
+      "type": "object"
+    },
+    "SegmentResult": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "filters": {
+          "$ref": "#/$defs/ResolvedFilters"
+        },
+        "units": {
+          "$ref": "#/$defs/Units"
+        },
+        "warnings": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "definitions": {
+          "$ref": "#/$defs/Definitions"
+        },
+        "analysis": {
+          "const": "segment_performance",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SummaryMetrics"
+            },
+            {
+              "$ref": "#/$defs/EmptyMetrics"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/SegmentRecord"
+          },
+          "title": "Records",
+          "type": "array"
+        },
+        "ranking": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Ranking"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "schema_version",
+        "status",
+        "scope",
+        "filters",
+        "units",
+        "warnings",
+        "definitions",
+        "analysis",
+        "metrics",
+        "records"
+      ],
+      "title": "SegmentResult",
+      "type": "object"
+    },
+    "SummaryMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "records": {
+          "minimum": 0,
+          "title": "Records",
+          "type": "integer"
+        },
+        "sales": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sales"
+        },
+        "profit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Profit"
+        },
+        "gross_loss": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gross Loss"
+        },
+        "positive_profit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Positive Profit"
+        },
+        "loss_records": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Loss Records"
+        },
+        "loss_record_rate_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Loss Record Rate Percent"
+        },
+        "margin_percent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Margin Percent"
+        },
+        "unique_order_ids": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unique Order Ids"
+        },
+        "average_order_value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Average Order Value"
+        }
+      },
+      "required": [
+        "records",
+        "sales"
+      ],
+      "title": "SummaryMetrics",
+      "type": "object"
+    },
+    "SummaryResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "question": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Question",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "partial",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "analysis": {
+          "const": "summary",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/SummaryResult"
+          },
+          "minItems": 1,
+          "title": "Results",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "question",
+        "status",
+        "analysis",
+        "results"
+      ],
+      "title": "SummaryResponse",
+      "type": "object"
+    },
+    "SummaryResult": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "empty",
+            "empty_ranking",
+            "unavailable",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "filters": {
+          "$ref": "#/$defs/ResolvedFilters"
+        },
+        "units": {
+          "$ref": "#/$defs/Units"
+        },
+        "warnings": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "definitions": {
+          "$ref": "#/$defs/Definitions"
+        },
+        "analysis": {
+          "const": "summary",
+          "title": "Analysis",
+          "type": "string"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SummaryMetrics"
+            },
+            {
+              "$ref": "#/$defs/EmptyMetrics"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/SummaryMetrics"
+          },
+          "maxItems": 0,
+          "title": "Records",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "status",
+        "scope",
+        "filters",
+        "units",
+        "warnings",
+        "definitions",
+        "analysis",
+        "metrics",
+        "records"
+      ],
+      "title": "SummaryResult",
+      "type": "object"
+    },
+    "Units": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Amount",
+          "type": "string"
+        },
+        "rates": {
+          "const": "percent",
+          "title": "Rates",
+          "type": "string"
+        },
+        "margin_change": {
+          "const": "percentage_points",
+          "title": "Margin Change",
+          "type": "string"
+        },
+        "counts": {
+          "const": "records",
+          "title": "Counts",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "rates",
+        "margin_change",
+        "counts"
+      ],
+      "title": "Units",
+      "type": "object"
+    }
+  },
+  "discriminator": {
+    "mapping": {
+      "discount_comparison": "#/$defs/DiscountResponse",
+      "loss_concentration": "#/$defs/LossResponse",
+      "monthly_trend": "#/$defs/MonthlyResponse",
+      "period_comparison": "#/$defs/ComparisonResponse",
+      "segment_performance": "#/$defs/SegmentResponse",
+      "summary": "#/$defs/SummaryResponse"
+    },
+    "propertyName": "analysis"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/SummaryResponse"
+    },
+    {
+      "$ref": "#/$defs/SegmentResponse"
+    },
+    {
+      "$ref": "#/$defs/ComparisonResponse"
+    },
+    {
+      "$ref": "#/$defs/MonthlyResponse"
+    },
+    {
+      "$ref": "#/$defs/LossResponse"
+    },
+    {
+      "$ref": "#/$defs/DiscountResponse"
+    }
+  ]
+}

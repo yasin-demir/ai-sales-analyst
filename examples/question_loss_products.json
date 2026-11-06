@@ -1,0 +1,11 @@
+{
+  "analysis": "loss_concentration",
+  "limit": 10,
+  "filters": {
+    "segments": {
+      "category": [
+        "Mobilya"
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-sales-analyst-local"
+version = "0.3.0"
+description = "Local CSV/XLSX sales analysis with reviewed mappings and evidence-based reports"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["pandas>=2.2,<4", "numpy>=1.26,<3", "matplotlib>=3.8,<4", "openpyxl>=3.1,<4", "pydantic>=2.10,<3", "fastapi>=0.115,<1", "uvicorn>=0.30,<1", "psutil>=7,<8"]
+
+[project.optional-dependencies]
+test = ["httpx>=0.27,<1"]
+eda = ["notebook>=7,<8", "nbclient>=0.10,<1", "nbconvert>=7,<8", "ipykernel>=6,<8", "Jinja2>=3.1,<4"]
+
+[project.scripts]
+sales-analyst = "src.cli:main"
+
+[project.gui-scripts]
+sales-analyst-desktop = "src.app:main"
+
+[tool.setuptools]
+packages = ["src"]
